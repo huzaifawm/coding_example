@@ -1,0 +1,9 @@
+%Question 3
+% Creates a mesh grid to use to display the surface
+[x,y] = meshgrid(-5:.2:5, -5:.2:5);
+
+% Finds z using x and y
+z = cos(x).*cos(y).*exp(-sqrt(x.^2 + y.^2)/4); % multiplies each value in the arrays
+
+colormap Autumn % Displays the surface
+surf(x,y,z) % Plots x, y and z

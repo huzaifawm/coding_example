@@ -1,0 +1,99 @@
+public class MyVector{
+
+	private int    dim; // Stores vector dimentions (number of vector components)
+	private int[]  vectorElements; // An array of integers to store vector components
+	public MyVector(int n) // sets n number of zeros
+	{
+            if(n <= 0) // If n is less than or equal to 0 sets dim to 1
+            {
+                dim = 1 ;
+            }
+            else // otherwise sets dim to n
+            {
+        	dim = n;
+            }
+            vectorElements = new int[dim]; // sets the dimention to vectorElements
+            for(int i = 0; i < dim; i++)
+            {
+                vectorElements[i] = 0; // sets every value in vectorElements to 0
+            }
+	}
+	public MyVector(int[] values) // sets vectorElements to represent values
+	{		
+            dim = values.length; // Sets dim to length of values
+            vectorElements = new int[dim] ;
+            for(int i = 0; i < dim; i++)
+            {
+		vectorElements[i] = values[i];
+            }
+	}
+	public int getDim()
+        {
+            return dim; // Returns dim
+	}
+
+	public int getElement(int i) // returns vector element
+	{ 	
+            if(i<0 || i >= dim) // Checks to see if the requested index exists
+            {
+                throw new IndexOutOfBoundsException("Invalid index");
+            }
+            return vectorElements[i];
+	}
+	public void setElement(int x, int i) // Replaces the ith index with x
+	{	
+            if(i<0 || i >= dim) // Checks to see if the index exists
+            {
+                throw new IndexOutOfBoundsException("Invalid index");
+            }
+            else
+            {
+		vectorElements[i] = x; 
+            }
+	}
+ 	public MyVector copy() // Duplicates the array
+	{ 
+            MyVector copy = new MyVector(vectorElements);
+            return copy;
+	}
+	public void scale(int a) // Multiplies each value in the array with a
+	{ 
+            for(int i=0; i < dim; i++)
+            {
+                vectorElements[i] = a*vectorElements[i];
+            }	
+	}
+	public void addTo1(MyVector v) // Adds vector v to this vector
+	{
+            if(dim != v.dim) // checks to see if the dimentions are equal, if not can't add
+            {
+                throw new ArithmeticException("Illegal Operation");
+            }
+            for(int i=0; i<dim; i++) // Adds each element of the 2 vectors
+            {
+                vectorElements[i] = vectorElements[i] + v.getElement(i);
+            }		
+	}
+	public MyVector addTo2( MyVector v) // Returns a new vector that is the adition of vector v and this vector
+	{	
+            if(dim != v.dim) // Checks to see if the dimentions are equal, if not can't add
+            {
+               throw new ArithmeticException("Illegal Operation");
+            }
+            MyVector vect= new MyVector(dim); // Creates a new vector
+	    for(int i = 0; i < dim; i++)
+	    { 
+                vect.setElement(v.getElement(i) + vectorElements[i], i); // Sets the values to the new vector
+	    }
+            return vect;
+	}
+	public String toString() // Returns a string representation of the array
+	{
+            String output = new String(); // Creates new string	
+            for(int i=0; i < dim; i++) // Stores each element of vectorElement
+            {
+		output += " " + vectorElements[i];
+            }
+            return output;
+	}
+}

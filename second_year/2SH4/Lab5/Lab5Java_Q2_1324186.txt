@@ -1,0 +1,168 @@
+public class EffBinaryVector{
+
+	
+	private ArrayList<Integer> effValues ;	
+	
+	public EffBinaryVector( int n ) {       		
+            
+            if( n<=0 )
+            {
+                n=1;
+            }
+            effValues = new ArrayList<Integer>();
+            for(int i=0;i<n;i++)
+            {
+                effValues.add(0);
+            }
+	}
+
+	public EffBinaryVector( int[] elements ) {       
+            
+            effValues = new ArrayList<Integer>();
+            set(elements);
+	}
+
+	public EffBinaryVector( byte[] effArray ){
+		
+            effValues = new ArrayList<Integer>();
+            if(effArray[0] < 0)
+            {
+		throw new IllegalArgumentException( "Invalid input.");
+            }
+            else
+            {
+                int j = effArray[0] ;
+		effValues.add(j);
+            }
+
+            int size = effArray.length;
+            for( int i = 1; i < size; i++ )
+            {
+		if( effArray[i] <= 0 )
+                {
+                    throw new IllegalArgumentException( "Invalid input.");
+                }
+                else
+		{ 
+                    int j = effArray[i] ;
+                    effValues.add(j);
+		}
+            }
+	}
+	
+	public void set(int[] elements) {	
+            
+            effValues = new ArrayList<Integer>();
+            for(int i = 0; i < elements.length; i++)
+            {
+                effValues.add(elements[i]);
+            }	
+	}
+	
+	public int[] convert() {	
+		
+            int[] x=new int[effValues.size()] ;
+            for(int i = 0; i < x.length; i++)
+            {
+                x[i] = effValues.get(i);
+            }
+            return x;
+	}
+
+	public int getBinaryVectorSize() {	
+		
+            int size = 0;
+            for (int i = 0; i < effValues.size(); i++)
+            {
+                size += effValues.get(i);
+            }
+            return size;
+	}
+
+	 public int getListSize() {		
+            
+             return effValues.size();
+	}
+	
+	public String toString() {
+		
+            String output = new String();
+            int m = effValues.size();
+            for(int i = 0; i < m; i++)
+            {
+		output += " " + effValues.get(i);
+            }
+            return output;		
+	}
+
+public static void main(String[] args)
+    {
+        //test for constructor1: if n<=1
+        EffBinaryVector test1 = new EffBinaryVector(-3);
+        System.out.println("Test for costructor 1 with n less than 1 element:" );
+        System.out.println(test1.toString());
+        System.out.println() ;
+        
+        //test for constructor1: if n>1
+        EffBinaryVector test2 = new EffBinaryVector(8);
+        System.out.println("Test for costructor 1 with n more than 1 element:" );
+        System.out.println(test2.toString());
+        System.out.println() ;
+        
+        //test for constructor2:
+        int[] x =  {7,0,-11,-3,7,0,22,};
+        EffBinaryVector test3= new EffBinaryVector(x);
+        System.out.println("Test for costructor 2:" );
+        System.out.println(test3.toString());
+        System.out.println() ;
+        
+        //test constructor3:invalid argument
+        try
+        {
+            System.out.println("Test for costructor3:invaild argument:" );
+            byte[] y = {0,-4,3,0,7};
+            EffBinaryVector test4=new EffBinaryVector(y);
+            System.out.println(test4.toString());
+        }
+        catch(IllegalArgumentException ex)
+        {
+            System.out.println(ex) ;
+            System.out.println() ;
+	    
+        }
+        
+        //test constructor3:valid argument
+        byte[] z = {0,4,7,3,2};
+        EffBinaryVector e=new EffBinaryVector(z);
+        System.out.println("Test for costructor3:vaild argument" );
+        System.out.println(e.toString());
+        System.out.println() ;
+        
+        //test getListSize():
+        System.out.println("Test for getListSize():");
+	System.out.println(test3.getListSize());
+	System.out.println() ;
+        
+        //test getBinaryVectorSize():
+        System.out.println("Test for getBinaryVectorSize()");
+        System.out.println(test3.getBinaryVectorSize());
+        System.out.println() ;
+        
+        //test set()
+        int[] xyz = {-8,2,4,0,1,4,-3};
+        test2.set(xyz);
+        System.out.println("Test for set()");
+        System.out.println(test2.toString());
+        System.out.println() ;
+        
+        //test convert()
+        int[] newone=test3.convert();
+        String printnewone=" " ;
+        for(int i=0;i<newone.length;i++)
+        { printnewone += newone[i] + " " ; }
+        System.out.println("Test for convert()");
+        System.out.println(printnewone);
+        System.out.println("is equal to") ;
+        System.out.println(test3.toString());
+    }
+}

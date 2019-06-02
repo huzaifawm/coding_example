@@ -1,0 +1,172 @@
+package lab.pkg2;
+
+/**
+ *
+ * @author Mirzahw
+ */
+public class Lab2 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        
+        System.out.println("Test Constructor WordLinkedList():");
+        System.out.println("Test 1:");
+        WordLinkedList WLLT1 = new WordLinkedList();
+        System.out.println("List:\n" + WLLT1.toString());
+        System.out.println("Size = " + WLLT1.getSize());
+        System.out.println("###################################");
+        /////////////////////////////////////////////////////////////
+        System.out.println("Test Constructor WordLinkedList(String[] arrayOfWords):");
+        System.out.println("Test 1: A sorted List"); // Test case
+        String[] ListSort = {"apple" , "carrot" , "kiwi" , "lemon"};
+        WordLinkedList WLL2T1 = new WordLinkedList(ListSort);
+        System.out.println("List:\n" + WLL2T1.toString());
+        System.out.println("Size = " + WLL2T1.getSize());
+        
+        System.out.println("Test 2: An unsorted List"); // Test case
+        String[] ListUnsort = {"bear" , "panda" , "anteater" , "turtle"};
+        WordLinkedList WLL2T2 = new WordLinkedList(ListUnsort);
+        System.out.println("List:\n" + WLL2T2.toString());
+        System.out.println("Size = " + WLL2T2.getSize());
+        
+        System.out.println("Test 3: Unsorted List with repetition"); // Test case
+        String[] ListRep = {"green" , "yellow" , "orange" , "yellow"};
+        WordLinkedList WLL2T3 = new WordLinkedList(ListRep);
+        System.out.println("List:\n" + WLL2T3.toString());
+        System.out.println("Size = " + WLL2T3.getSize());
+        System.out.println("###################################");
+        /////////////////////////////////////////////////////////////
+        System.out.println("Test Constructor getWordAt(int i):");
+        String[] ListInd = {"pen" , "marker" , "highlighter" , "paintbrush" , "sharpie"};
+        WordLinkedList gWA = new WordLinkedList(ListInd);
+        System.out.println("List:\n" + gWA.toString());
+        System.out.println("Test 1: Valid index - 2"); // Test case
+        int VIgWA = 2;
+        try{
+            System.out.println(gWA.getWordAt(VIgWA));
+        }
+        catch(IndexOutOfBoundsException e){System.out.println(e);}
+        
+        System.out.println("Test 2: Invalid index - 15"); // Test case
+        int IIgWA = 15;
+        try{
+            System.out.println(gWA.getWordAt(IIgWA));
+        }
+        catch(IndexOutOfBoundsException e){System.out.println(e);}
+        System.out.println("###################################");
+        /////////////////////////////////////////////////////////////
+        System.out.println("Test Constructor insert(String newword):");
+        String[] ListIn = {"soccer" , "hockey"};
+        WordLinkedList i = new WordLinkedList(ListIn);
+        System.out.println("Test 1: Insert in the beginning of the list - baseball"); // Test case
+        String ib = "baseball";
+        i.insert(ib);
+        System.out.println("List:\n" + i.toString());
+        System.out.println("Size = " + i.getSize());
+        
+        System.out.println("Test 2: Insert in the middle of the list - football"); // Test case
+        String im = "football";
+        i.insert(im);
+        System.out.println("List:\n" + i.toString());
+        System.out.println("Size = " + i.getSize());
+        
+        System.out.println("Test 3: Insert word already in the list - football"); // Test case
+        String iwil = "football";
+        i.insert(iwil);
+        System.out.println("List:\n" + i.toString());
+        System.out.println("Size = " + i.getSize());
+        
+        System.out.println("Test 4: Insert word in empty list - hello"); // Test case
+        String ie = "hello";
+        WLLT1.insert(ie); // empty list from earlier
+        System.out.println("List:\n" + WLLT1.toString());
+        System.out.println("Size = " + WLLT1.getSize());
+        System.out.println("###################################");
+        /////////////////////////////////////////////////////////////
+        System.out.println("Test Constructor find(String word):");
+        String[] ListFind = {"nike" , "puma" , "addidas" , "timberlands"};
+        WordLinkedList f = new WordLinkedList(ListFind);
+        System.out.println("List:\n" + f.toString());
+        System.out.println("Test 1: Word in List - nike"); // Test case
+        String WiL = "nike";
+        System.out.println("Index: " + f.find(WiL));
+
+        System.out.println("Test 2: Word not in List - converse"); // Test case
+        String WniL = "converse";
+        System.out.println("Index: " + f.find(WniL));
+        System.out.println("###################################");
+        /////////////////////////////////////////////////////////////
+        System.out.println("Test Constructor remove(int i):");
+        String[] ListRemove = {"java" , "c" , "python" , "lynx"};
+        WordLinkedList r = new WordLinkedList(ListRemove);
+        System.out.println("List:\n" + r.toString());
+        System.out.println("Test 1: Valid index - 2"); // Test case
+        int VIr = 2;
+        try{
+            r.remove(VIr);
+            System.out.println("List: \n" + r.toString());
+            System.out.println("Size = " + r.getSize());
+        }
+        catch(IndexOutOfBoundsException e){System.out.println(e);}
+        
+        System.out.println("Test 2: First index - 0"); // Test case
+        int FIr = 0;
+        try{
+            r.remove(FIr);
+            System.out.println("List: \n" + r.toString());
+            System.out.println("Size = " + r.getSize());
+        }
+        catch(IndexOutOfBoundsException e){System.out.println(e);}
+        
+        System.out.println("Test 3: Invalid index - 10"); // Test case
+        int IIr = 10;
+        try{
+            r.remove(IIr);
+            System.out.println("List: \n" + r.toString());
+            System.out.println("Size = " + r.getSize());
+        }
+        catch(IndexOutOfBoundsException e){System.out.println(e);}
+        System.out.println("###################################");
+        /////////////////////////////////////////////////////////////
+        System.out.println("Test Constructor mergeTo(WordLinkedList that):");
+        String[] wic1 = {"a" , "e" , "u"};
+        String[] wic2 = {"o" , "e"};
+        String[] nwic = {"i" , "o"};
+        String[] m2el = {"a" , "e" , "i" , "o" , "u"};
+        System.out.println("Test 1: Words in common"); // Test case
+        WordLinkedList cw1 = new WordLinkedList(wic1);
+        System.out.println("List 1:\n" + cw1.toString());
+        WordLinkedList cw2 = new WordLinkedList(wic2);
+        System.out.println("List 2:\n" + cw2.toString());
+        cw1.mergeTo(cw2);
+        System.out.println("Merged This List:\n" + cw1.toString());
+        System.out.println("Size = " + cw1.getSize());
+        System.out.println("Merged That List:\n" + cw2.toString());
+        System.out.println("Size = " + cw2.getSize());
+        
+        System.out.println("Test 2: No words in common"); // Test case
+        WordLinkedList ncw1 = new WordLinkedList(wic1);
+        System.out.println("List 1:\n" + ncw1.toString());
+        WordLinkedList ncw2 = new WordLinkedList(nwic);
+        System.out.println("List 2:\n" + ncw2.toString());
+        ncw1.mergeTo(ncw2);
+        System.out.println("Merged This List:\n" + ncw1.toString());
+        System.out.println("Size = " + ncw1.getSize());
+        System.out.println("Merged That List:\n" + ncw2.toString());
+        System.out.println("Size = " + ncw2.getSize());
+        
+        System.out.println("Test 3: merge with empty list"); // Test case
+        WordLinkedList nempl = new WordLinkedList(m2el);
+        System.out.println("List 1:\n" + nempl.toString());
+        WordLinkedList empL = new WordLinkedList();
+        System.out.println("List 2:\n" + empL.toString());
+        nempl.mergeTo(empL);
+        System.out.println("Merge This List:\n" + nempl.toString());
+        System.out.println("Size = " + nempl.getSize());
+        System.out.println("Merge That List:\n" + empL.toString());
+        System.out.println("Size = " + empL.getSize());
+        System.out.println("###################################");
+    }
+}

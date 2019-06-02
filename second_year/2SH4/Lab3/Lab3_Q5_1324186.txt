@@ -1,0 +1,177 @@
+/* 
+ * File:   main.c
+ * Author: mirzahw
+ *
+ * Created on October 2, 2014, 2:33 PM
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#define N 5
+
+// Declares Variables used
+int ** storeEff(int vec1[] , int n , int *kPtr);
+int **addEff(int **eff1, int **eff2, int k1, int k2, int *kPtr);
+
+/*
+ * 
+ */
+int **storeEff(int vec1[] , int n , int *kPtr) {
+    
+    int i, j, counter; // used for For loops
+    int **eff = malloc(2 * (sizeof (int*))); // allocates memory to store variables
+    for (i = 0, counter = 0; i < n; i++) // goes through each value in the vector looking for a non-zero values
+    {
+        if (vec1[i] != 0)
+        {
+            counter++; // Adds one to counter for every non-zero value
+        }
+    }
+    *kPtr = counter; // Sets the size of the array to the number of non-zero values
+    for (i = 0; i < 2; i++) // Allocates memory for rows
+    {
+        eff[i] = malloc(counter * sizeof (int)); // Allocates memory for columns
+    }
+    for (i = 0, j = 0; i < n; i++) // Goes through vector looking for non-zero values
+    {
+        if (vec1[i] != 0)
+        {
+            eff[0][j] = i; // Stores index in the first row
+            eff[1][j] = vec1[i]; // Stores value of that index in second row
+            j++;
+        }
+    }
+    return eff; // returns the efficient ma
+}
+int **addEff(int **eff1, int **eff2, int k1, int k2, int *kPtr){
+    
+    int i,j; // Used for For loops
+    int vecSumk = 0; // size of the sum vector
+    int zeroval = 0; // Used to see if the sum is 0
+    int x = 0;
+    int **vecSum; // sum vector
+    int **largEff= NULL; //pointer to pointer of larger vector
+    int **smallEff= NULL; //pointer to pointer of smaller vector
+    int largI = 0; //used to count through the big and small vectors separately
+    int smallI = 0; //used to count through the big and small vectors separately
+    if(k1 == 0) // If eff1 is 0 then the sum is eff2
+    {
+        printf("The sum of the effective vectors is\n");
+        for (i = 0; i < k2; i++)
+        {
+            printf( "%d : %d\n", eff2[0][i], eff2[1][i]);
+        }
+        return eff2;
+    }
+    else if (k2 == 0) // If eff2 is 0 then the sum is eff1
+    {
+        printf("The sum of the effective vectors is\n");
+        for (i = 0; i < k1; i++)
+        {
+            printf( "%d : %d\n", eff1[0][i], eff1[1][i]);
+        }
+        return eff1;
+    }
+    
+    for (i = 0; i < k1; i++) // Goes through the 2 vectors 
+    {
+        for (j = 0; j < k2; j++) 
+        {
+            if (eff1[0][i] == eff2[0][j]) // Checks to see if they have non-zero values in the same location
+            {
+                if (eff1[1][i] + (eff2[1][j]) == 0) // Checks if the sum is 0
+                    zeroval = zeroval + 1; 
+                else
+                    x++; // If the vectors have a non-zero value in the same location it'll take one away from the final size
+            }
+        }
+    }
+    
+    vecSumk = k1 + k2 - x - 2*zeroval; // Calculates the value of vecSumk
+    
+    *kPtr = vecSumk; // sets the value of vecSumk to kptr
+    vecSum = malloc(2*sizeof(int*)); // allocates the memory of vecSum
+    for (i = 0; i < 2; i++) // allocates memory for each column for each row
+    {
+        vecSum[i] = malloc(vecSumk*sizeof(int));
+    }
+    
+    if (k1 >= k2) // Checks to see with vector had the larger k
+    {
+        largEff = eff1;
+        smallEff = eff2;
+    }
+    else
+    {
+        largEff = eff2;
+        smallEff = eff1;
+    }
+    
+    for (i = 0; i < vecSumk; 0 )  // Sets position of sum vector
+    {   
+        int largP = largEff[0][largI]; // Specific position in larger eff vector
+        int smallP = smallEff[0][smallI]; // Specific position in smaller eff vector
+        
+        
+        if (largP > smallP) //Inputs the positions into the new summed vector in the proper order
+        {
+            vecSum[0][i] = smallP; //checks to see who has the smallest current position to input index in chronological order
+            i++; 
+            smallI++;  
+        }
+
+        else if(largP == smallP) //if they are at same index
+        {
+            
+            if((largEff[1][largI])+ (smallEff[1][smallI]) != 0)//if the numbers don't cancel it adds the index to the new summed vector
+                vecSum[0][i++] = largP;
+            largI++;
+            smallI++;
+        }
+        else
+        {  
+            vecSum[0][i++] = largP;
+            largI++;
+        }
+    }
+    for (i = 0; i <= vecSumk; i++) // Goes through each vecSum position
+    {
+        int p = vecSum[0][i]; //sets the index to p
+        int eff1Val = 0; //current values in effective vectors
+        int eff2Val = 0; //current values in effective vectors
+        
+        for (j = 0; j < k1; j++) //goes through each position
+        {
+            if (eff1[0][j]==p) // if vecSum position found
+            eff1Val = eff1[1][j]; // sets eff1Val to the value in that position 
+        }
+        
+        for (j = 0; j < k2; j++) //goes through each position
+        {
+            if (p==(eff2[0][j])) // if vecSum position found
+            eff2Val = eff2[1][j]; // sets eff2Val to the value in that position 
+        }
+        vecSum[1][i] = eff1Val + eff2Val; //adds the two eff values in the positions
+    }
+    printf("The sum of the effective vectors is\n");  
+    for (i = 0; i < vecSumk; i++) // Prints vector sum
+    {
+        printf( "%d - %d\n", vecSum[0][i], vecSum[1][i]);
+    }
+    return vecSum;
+}
+int main(int argc, char** argv) {
+
+    int vec1[N] = {0, 4, 0, 3, 1}; // Vectors used
+    int vec2[N] = {1, 3, 0, 3, -1}; // Vectors used
+    int vec1size, vec2size, sumVecsize; // Size of the two sparse vectors
+    int **eff1;
+    int **eff2;
+    int **sum;
+    int i; // Used for For loop
+    eff1 = storeEff(vec1, N, &vec1size);
+    eff2 = storeEff(vec2, N, &vec2size);
+    sum = addEff(eff1, eff2, vec1size, vec2size, &sumVecsize);
+    return (EXIT_SUCCESS);
+}
+

@@ -1,0 +1,39 @@
+/* 
+ * File:   main.c
+ * Author: mirzahw
+ *
+ * Created on October 2, 2014, 2:33 PM
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+/*
+ * 
+ */
+char *my_strcat(const char * const str1, const char * const str2){
+    
+    int i, j; // Used for For loops
+    int str1_len = strlen(str1); // Length of each string
+    int str2_len = strlen(str2); // Length of each string
+    int bigStr_len = str1_len + str2_len + 1; // Adds the 2 lengths and 1 for the null
+    char *bigStr = (char*)calloc((bigStr_len), sizeof(char));
+    for (i = 0; i < str1_len; i++)
+    {
+        bigStr[i] = str1[i]; // Stores each value of the first string in the big string
+    }
+    for (j = 0; j < str2_len; j++, i++)
+    {
+        bigStr[i] = str2[j]; // Stores each value of the second string in the big sting
+    }
+    printf("%d",i);
+    bigStr[i] = '\0'; // Sets the last value of the big string to NULL
+    return bigStr;
+}
+int main(int argc, char** argv) {
+
+    printf("%s\n\n" , my_strcat("Hello" , "World!")); // Calls the function
+    return (EXIT_SUCCESS);
+}
+

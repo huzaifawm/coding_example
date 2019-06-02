@@ -1,0 +1,124 @@
+package lab5;
+
+/**
+ *
+ * @author Kruz
+ */
+public class Lab5 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        
+        System.out.println("Test Constructor BSTSet():");
+        System.out.println("Test 1 - Create an empty Tree:");
+        BSTSet C1 = new BSTSet();
+        C1.printBSTSet();
+        System.out.println("###################################");
+        System.out.println("Test Constructor BSTSet(int[] array):");
+        System.out.println("Test 1 - Normal array:");
+        int[] C2array1 = {1,3,2,4};
+        BSTSet C2T1 = new BSTSet(C2array1);
+        C2T1.printBSTSet();
+        
+        System.out.println("Test 2 - Array with Repetition:");
+        int[] C2array2 = {5,6,5,1,2,2,4,0,3};
+        BSTSet C2T2 = new BSTSet(C2array2);
+        C2T2.printBSTSet();
+        System.out.println("###################################");
+        System.out.println("Test Constructor isIn(int v):");
+        int[] isInarray = {2,4,6,8};
+        BSTSet isInT = new BSTSet(isInarray);
+        isInT.printBSTSet();
+        System.out.println("Test 1 - Valid input: 4");
+        System.out.println(isInT.isIn(4));
+        
+        System.out.println("Test 2 - Invalid input: 3");
+        System.out.println(isInT.isIn(3));
+        System.out.println("###################################");
+        System.out.println("Test Constructor add(int v):");
+        int[] addarray = {1,4,7,5};
+        BSTSet addT = new BSTSet(addarray);
+        addT.printBSTSet();
+        System.out.println("Test 1 - Number not in tree: 2");
+        addT.add(2);
+        addT.printBSTSet();
+        
+        System.out.println("Test 2 - Number in tree: 7");
+        addT.add(7);
+        addT.printBSTSet();
+        System.out.println("###################################");
+        System.out.println("Test Constructor remove(int v):");
+        int[] removearray = {4,6,2,8};
+        BSTSet removeT = new BSTSet(removearray);
+        removeT.printBSTSet();
+        System.out.println("Test 1 - Number not in tree: 5");
+        System.out.println(removeT.remove(5));
+	removeT.printBSTSet();
+        
+        System.out.println("Test 2 - Number in tree: 4");
+        System.out.println(removeT.remove(4));
+	removeT.printBSTSet();
+        
+        System.out.println("Test 3 - Number in tree: 2");
+        System.out.println(removeT.remove(2));
+	removeT.printBSTSet();
+        System.out.println("###################################");
+        System.out.println("Test Constructor union(BSTSet s):");
+        System.out.println("Test 1 - 2 Tree's with different values:");
+        int[] unionarray1 = {4,6,2,8};
+        int[] unionarray2 = {1,3,5};
+        BSTSet unionT1a1 = new BSTSet(unionarray1);
+        BSTSet unionT1a2 = new BSTSet(unionarray2);
+        unionT1a1.printBSTSet();
+        unionT1a2.printBSTSet();
+        BSTSet unionT1 = unionT1a1.union(unionT1a2);
+	unionT1.printBSTSet();
+        
+        System.out.println("Test 2 - 2 Tree's with some same values:");
+        int[] unionarray3 = {6,3,4,9};
+        int[] unionarray4 = {4,9,5,1};
+        BSTSet unionT2a1 = new BSTSet(unionarray3);
+        BSTSet unionT2a2 = new BSTSet(unionarray4);
+        unionT2a1.printBSTSet();
+        unionT2a2.printBSTSet();
+        BSTSet unionT2 = unionT2a1.union(unionT2a2);
+	unionT2.printBSTSet();
+        System.out.println("###################################");
+        System.out.println("Test Constructor intersection(BSTSet s):");
+        System.out.println("Test 1:");
+        int[] intersectionarray1 = {4,6,2,8};
+        int[] intersectionarray2 = {2,6,7};
+        BSTSet intersectionT1a1 = new BSTSet(intersectionarray1);
+        BSTSet intersectionT1a2 = new BSTSet(intersectionarray2);
+        intersectionT1a1.printBSTSet();
+        intersectionT1a2.printBSTSet();
+        BSTSet intersectionT1 = intersectionT1a1.intersection(intersectionT1a2);
+	intersectionT1.printBSTSet();
+        
+        System.out.println("Test 2 - Empty array:");
+        int[] intersectionarray3 = {4,6,2,8};
+        int[] intersectionarray4 = {};
+        BSTSet intersectionT2a1 = new BSTSet(intersectionarray3);
+        BSTSet intersectionT2a2 = new BSTSet(intersectionarray4);
+        intersectionT2a1.printBSTSet();
+        intersectionT2a2.printBSTSet();
+        BSTSet intersectionT2 = intersectionT2a1.intersection(intersectionT2a2);
+	intersectionT2.printBSTSet();
+        System.out.println("###################################");
+        System.out.println("Test Constructor size():");
+        System.out.println("Test 1:");
+        int[] sizearray1 = {4,6,2,8};
+        BSTSet sizeT1 = new BSTSet(sizearray1);
+        sizeT1.printBSTSet();
+        System.out.println(sizeT1.size());
+        
+        System.out.println("Test 2: Empty");
+        int[] sizearray2 = {};
+        BSTSet sizeT2 = new BSTSet(sizearray2);
+        sizeT2.printBSTSet();
+        System.out.println(sizeT2.size());
+        System.out.println("###################################");
+    }
+}

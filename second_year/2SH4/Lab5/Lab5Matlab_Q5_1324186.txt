@@ -1,0 +1,6 @@
+% Question 5
+function x = is_diagonally_dom(A)
+
+    x=(all((2*abs(diag(A))) >= sum(abs(A),2)));
+
+end
