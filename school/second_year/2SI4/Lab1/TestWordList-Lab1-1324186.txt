@@ -1,0 +1,171 @@
+    public static void main(String[] args) {
+        //capacity
+        int cap = 6; 
+        int cap2 = 2;
+        // Positions
+        int ind1 = 2; //valid
+        int ind2 = 6; //invalid
+        //Tests for sublist()
+        char char1 = 'a';
+        char char2 = 'e';
+        char char3 = 'f';
+        char char4 = 'n';
+        char char5 = 'd';
+        char char6 = 'i';  
+        char char7 = 'l'; 
+        char char8 = 's'; 
+        // Test Lists
+        String[] wordsL1 = {"adore", "almost", "bother", "candle"}; // Sorted
+	String[] wordsL2 = {"not", "there", "after", "fill", "zoom"}; // Unsorted
+        String[] wordsL3 = {"mate","know","stop","know"}; // Unsorted with repetitions
+        String[] wordsL4 = {"fair", "flag","flung","hair", "hat", "make", "mello", "more","mummy", "sought"}; // Sorted
+        // Test Strings
+	String str2 = "bully";//word not in wordsL1 - test insert inside list
+        String str3 = "almost";//word in wordsL1
+        String str5 = "candle";//last word of wordsL1
+	String str4 = "mello";//word in wordsL4 - test find()
+	String str1 = "cray";
+	String str6 = "aaron"; //smaller than first word in words 2
+        
+	//--------------------------------------------------------------------------------
+        // Test constructor 1
+        WordList testList1= new WordList(cap);
+        System.out.println("Constructor 1:");
+        System.out.println("Test 1:\n" + "List:\n" + testList1.toString());
+        System.out.println("capacity = " + testList1.getCapacity() + "\tsize = " + testList1.getSize());     
+        
+        System.out.println("-------------------------------------------------------------");
+        // Test constructor 2
+        WordList testList2= new WordList(wordsL1);
+        System.out.println("Constructor 2:");
+        System.out.println("Test 1 - sorted:\n" + "List:\n" + testList2.toString());
+        System.out.println("capacity = " + testList2.getCapacity() + "\tsize = " + testList2.getSize());
+
+        // Test constructor 2
+        WordList testList3 = new WordList(wordsL2);
+        System.out.println("\nTest 2 - unsorted, no repetitions:\n" + "List:\n" + testList3.toString());
+        System.out.println("capacity = " + testList3.getCapacity() + "\tsize = " + testList3.getSize());  
+
+        // Test constructor 2
+        testList3 = new WordList(wordsL3);
+        System.out.println("\nTest 3 - unsorted, repetitions:\n" + "List:\n" + testList3.toString());
+        System.out.println("capacity = " + testList3.getCapacity() + "\tsize = " + testList3.getSize());
+                     
+        System.out.println("-------------------------------------------------------------");
+        System.out.println("Tests method insert word:");
+        testList2.insert(str6);
+        System.out.println("Test 1 - front of list: " + str6 + "\nList:\n" + testList2.toString());
+        System.out.println("capacity = " + testList2.getCapacity() + "\tsize = " + testList2.getSize());
+                             
+        testList2 = new WordList(wordsL1);
+        testList2.insert(str2);
+        System.out.println("\nTest 2 - inside list: " + str2 + "\nList:\n" + testList2.toString());
+        System.out.println("capacity = " + testList2.getCapacity() + "\tsize = " + testList2.getSize());
+
+        testList2 = new WordList(wordsL1);
+        testList2.insert(str1);
+        System.out.println("\nTest 3 - end of list: " + str1 + "\nList:\n" + testList2.toString());
+        System.out.println("capacity = " + testList2.getCapacity() + "\tsize = " + testList2.getSize());
+        
+        testList2 = new WordList(wordsL1);
+        testList2.insert(str3);
+        System.out.println("\nTest 4 - when word already exists: " + str3 + "\nList:\n" + testList2.toString());
+        System.out.println("capacity = " + testList2.getCapacity() + "\tsize = " + testList2.getSize());
+        
+        testList1 = new WordList(cap);
+        testList1.insert(str1);
+        System.out.println("\nTest 5 - in empty list: " + str1 + "\nList:\n" + testList1.toString());
+        System.out.println("capacity = " + testList1.getCapacity() + "\tsize = " + testList1.getSize());
+                
+        // Test insert newword(not in list) when size==capacity
+        testList2 = new WordList(cap2);
+        for(int i = 0; i < cap2; i++)
+        {
+            testList2.insert(str1);
+            str1 = str1 + "a";
+        }
+        System.out.println("\nTest 6 - not in list when size==capacity: " + str2);
+        testList2.insert(str2);
+        System.out.println("List:\n" + testList2.toString());
+        System.out.println("capacity = " + testList2.getCapacity() + "\tsize = " + testList2.getSize());       
+                
+        System.out.println("-------------------------------------------------------------");
+        System.out.println("Tests getWordAt():");
+        testList2 = new WordList(wordsL1);
+        try
+        {
+            System.out.println("Test 1 - valid index i");
+            System.out.println(testList2.getWordAt(ind1));
+        }
+        catch(ArrayIndexOutOfBoundsException e){System.out.println(e);}
+        
+        try{
+            System.out.println("\nTest 2 - invalid index i");
+            System.out.println(testList2.getWordAt(ind2));
+        }
+        catch(ArrayIndexOutOfBoundsException e){System.out.println(e);}
+        
+        System.out.println("-------------------------------------------------------------");
+        System.out.println("Tests find():");
+        testList2 = new WordList(wordsL4);
+        System.out.println("Test 1 - index not in list: " + str2);
+        int searchI = testList2.find(str2);
+        System.out.println("returned index: " + searchI);
+
+        System.out.println("\nTest 2 - index in list: " + str4);
+        searchI = testList2.find(str4);
+        System.out.println("returned index: " + searchI);
+        
+        System.out.println("-------------------------------------------------------------");
+        System.out.println("Tests remove()");
+        System.out.println("Test 1 - word not in list: " + str2);
+        testList2 = new WordList(wordsL1);
+        testList2.remove(str2);
+        System.out.println("List: \n" + testList2.toString());
+        System.out.println("capacity = " + testList2.getCapacity() + "\tsize = " + testList2.getSize());
+
+        testList2 = new WordList(wordsL1);
+        System.out.println("\nTest 2 - inside or beginning: " + str3);
+        testList2.remove(str3);
+        System.out.println("List: \n" + testList2.toString());
+        System.out.println("capacity = " + testList2.getCapacity() + "\tsize = " + testList2.getSize());
+
+        System.out.println("\nTest 3 - empty list: " + str5);
+        WordList testList4 = new WordList(cap);
+        testList4.remove(str5);
+        System.out.println("List: \n" + testList4.toString());
+        System.out.println("capacity = " + testList4.getCapacity() + "\tsize = " + testList4.getSize());
+      
+        System.out.println("-------------------------------------------------------------");
+        System.out.println("Tests sublist()");
+        System.out.println("Test 1 - from empty list ");
+        WordList testList5 = new WordList(cap);
+        WordList testList6=testList5.sublist(char3, char4);
+        System.out.println("sublist: \n" + testList6.toString());
+        System.out.println("capacity = " + testList6.getCapacity() + "\tsize = " + testList6.getSize());
+
+        System.out.println("\nTest 2 - empty from non empty list ");
+        testList5 = new WordList(wordsL4);
+        testList6 =testList5.sublist(char1, char2);
+        System.out.println("sublist: \n" + testList6.toString());
+        System.out.println("capacity = " + testList6.getCapacity() + "\tsize = " + testList6.getSize());
+
+        System.out.println("\nTest 3 - non-empty, init fin words in list");
+        testList5 = new WordList(wordsL4);
+        testList6 =testList5.sublist(char3,char4);
+        System.out.println("sublist: \n" + testList6.toString());
+        System.out.println("capacity = " + testList6.getCapacity() + "\tsize = " + testList6.getSize());
+
+        System.out.println("\nTest 4 - non-empty, init fin words not in list");
+        testList5 = new WordList(wordsL4);
+        testList6 =testList5.sublist(char7,char8);
+        System.out.println("sublist: \n"+testList6.toString());
+        System.out.println("capacity = " + testList6.getCapacity() + "\tsize = " + testList6.getSize());
+
+        System.out.println("\nTest 23 - prefix or a suffix");
+        testList5 = new WordList(wordsL4);
+        testList6 =testList5.sublist(char5,char6);
+        System.out.println("sublist: \n"+testList6.toString());
+        System.out.println("capacity = " + testList6.getCapacity() + "\tsize = " + testList6.getSize());
+   }
+}

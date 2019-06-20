@@ -1,0 +1,57 @@
+/* 
+ * File:   main.c
+ * Author: mirzahw
+ *
+ * Created on October 2, 2014, 2:28 PM
+ */
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+/*
+ * 
+ */
+int qualityPoints (float Avg) /* Converts average to GPA*/
+{
+    if (Avg >= 90 && Avg <= 100)
+    {
+        return 4;
+    }
+    else if (Avg >= 80 && Avg < 90)
+    {
+        return 3;
+    }
+    else if (Avg >= 70 && Avg < 80)
+    {
+        return 2;
+    }
+    else if (Avg >= 60 && Avg < 70)
+    {
+        return 1;
+    }
+    else if (Avg >= 0 && Avg < 60)
+    {
+        return 0;
+    }
+    else
+    {
+        printf("There was an invalid input. ");
+        return -1;
+    }
+}
+int main(int argc, char** argv)
+{
+    int Student_Num; /* Number of Students*/
+    int i; /* Used as counter for for loop*/
+    float Student_Avg; /* Students Average*/
+    printf("How many students averages are to be inputed? ");
+    scanf("%d" , &Student_Num);
+    for (i = 0; i < Student_Num; i++) /* Loops for all students*/
+    {
+        printf("Enter the students average: ");
+        scanf ("%f" , &Student_Avg);
+        printf("The Students GPA is: %d\n" , qualityPoints(Student_Avg)); /* Computes GPA*/
+    }    
+    return (EXIT_SUCCESS);
+}

@@ -1,0 +1,57 @@
+/* 
+ * File:   main.c
+ * Author: mirzahw
+ *
+ * Created on October 2, 2014, 2:33 PM
+ */
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void process(double y[], int m, double *avPtr, double *diffPtr);// Initializes functions used
+
+/*
+ * 
+ */
+void process(double y[], int m, double *avPtr, double *diffPtr){ // Finds the Average and Difference
+    
+    int i; // Used for For Loop
+    double avg = y[0]; // Gives average the first value in the array
+    double min = y[0], max = y[0]; // Gives min and max the first value in the array
+    for (i = 1; i < m; i++) // Goes through each value in the Array
+    {
+        avg = avg + y[i]; // Adds each value of the Array in the average
+        if (y[i] < min) // Checks to find the smallest number
+        {
+            min = y[i];
+        }
+        if (y[i] > max) // Checks to find the largest number
+        {
+            max = y[i];
+        }
+    }
+    *avPtr = avg/m; // Calculates the average
+    *diffPtr = max - min; // Calculates the difference between max and min
+}
+int main(int argc, char** argv) {
+
+    int initial_num; // Initial numbers inputted
+    int i; // Used for For Loop
+    double *Array;
+    double mean;
+    double difference;
+    printf("How many numbers are to be inputted? ");
+    scanf("%d" , &initial_num);
+    Array = (double*) calloc (initial_num,sizeof(double));
+    for (i = 0; i < initial_num; i++) // Stores each value in an Array
+    {
+        printf("Enter a number: ");
+        scanf("%lf" , &Array[i]);
+    }
+    process(Array, initial_num, &mean, &difference); // Calls the function
+    printf("The average of the numbers inputted is: %lf\n" , mean); // Displays the mean
+    printf("The difference between the max and min value is: %lf\n\n" , difference); // Displays the difference
+    return (EXIT_SUCCESS);
+}
+

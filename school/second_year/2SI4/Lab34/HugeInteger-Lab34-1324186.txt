@@ -1,0 +1,349 @@
+package lab3_4;
+import java.util.Random;
+
+public class HugeInteger {
+    
+    private int[] hugeintarray;
+    private int size;
+    
+    public HugeInteger(String val) throws ArrayIndexOutOfBoundsException { // Need to add the exception thing
+        
+        if ((val == null)||(val == "")) // Checks to make sure a valid string is inputted
+        {
+            throw new ArrayIndexOutOfBoundsException("Invalid");
+        }
+        else
+        {
+            // Checks to see if the sign is already in the array
+            if ((val.charAt(0) == '-') || (val.charAt(0) == '+'))
+            {
+                size = val.length(); // Finds the array of the string
+                hugeintarray = new int[size]; // Makes a new array
+                // Sets the first value in hugeintarray to the sign
+                hugeintarray[0] = String.valueOf(val.charAt(0)).codePointAt(0);
+            }
+            else // If not adds one to hugeintarray to add the sign
+            {
+                size = val.length()+1; // Adds one to size to accommodate sign
+                hugeintarray = new int[size]; // Makes a new array
+                // Sets the first value in hugeintarray to positive
+                hugeintarray[0] = String.valueOf('+').codePointAt(0);
+            }
+            // Transfers all string numbers to hugeinarray
+            for (int x = 1; x < hugeintarray.length; x++)
+            {
+                char ch = val.charAt(val.length()-x); // Get's each chat
+                int temp = String.valueOf(ch).codePointAt(0); // Converts from char to int
+                hugeintarray[hugeintarray.length-x] = temp-48; // Stores in hugeintarray
+            }
+        }
+    }
+    
+    public HugeInteger(int n){
+        
+        if (n < 1) // Makes sure n is a valid number
+        {
+            throw new ArrayIndexOutOfBoundsException("Invalid"); // Throws exception
+        }
+        else
+        {
+            size = n+1;
+            hugeintarray = new int[size]; // Makes an array
+            hugeintarray[0] = 43; // Adds sign
+            Random randomGenerator = new Random(); // Random Number generator 
+            for (int i = 1; i < size; i++)
+            {
+                int randomInt = randomGenerator.nextInt(10); // Generates random numbers
+                hugeintarray[i] = randomInt; // Stores random number in hugeintarray
+            }
+        }
+    }
+    
+    public int[] getHugeInt() { // Makes hugeintarray public
+        
+        return this.hugeintarray;
+    }
+    
+    public int getSize() { // Makes the size of this array public
+        
+        return this.size;
+    }
+    
+    public HugeInteger add(HugeInteger h){ // adds this to h
+        
+        if (hugeintarray[0] != h.getHugeInt()[0]) // Checks to see if the signs are not the same
+        {
+            h.getHugeInt()[0] = hugeintarray[0]; // Makes the signs the same
+            return this.subtract(h); // Subtracts the 2 HugeIntegers
+        }
+        else
+        {
+            int[] big; // Stores the bigger HugeInteger
+            int[] small; // Stores the samller HugeInteger
+            String sum = ""; // Final output
+            int i; // Used in loops
+            int x; // Used to compare the 2 HugeIntegers
+            int temp; // Holds each added number
+            int temp2 = 0; // Holds the carry
+            x = this.compareTo(h); // Compares to see with is bigger
+            // Labels the bigger and smaller array appropriately
+            if (x == 1)
+            {
+                big = hugeintarray;
+                small = h.getHugeInt();
+            }
+            else
+            {
+                big = h.getHugeInt();
+                small = hugeintarray;
+            }
+            for (i = 1; i < small.length; i++) // Adds the 2 HugeIntegers and stores them in sum
+            {
+                temp = (big[big.length-i] + small[small.length-i] + temp2)%10; // Adds each number with carry
+                sum = temp + sum; // Stores it in sum
+                temp2 = (big[big.length-i] + small[small.length-i] + temp2)/10; // Finds carry
+            }
+            while (i < big.length) // Adds the remaining numbers in the big array to sum
+            {
+                temp = (big[big.length-i]+temp2)%10; // Transfers each number with the carry
+                sum = temp + sum; // Stores it in sum
+                temp2 = (big[big.length-i]+temp2)/10; // Finds carry
+                i++; // Adds one to i
+            }
+            if (temp2 > 0) // If there is still a carry remaining
+            {
+                sum = temp2 + sum; // Adds the carry to sum
+            }
+            HugeInteger add = new HugeInteger(sum); // Makes sum into type HugeInteger
+            if (hugeintarray[0] == 43) // Finds the appropriate sign
+            {
+                add.getHugeInt()[0] = 43; // 2 positives added give you a positive
+            }
+            else
+            {
+                add.getHugeInt()[0] = 45; // 2 negatives added give you a negative
+            }
+            return add; // returns the added number
+        }
+    }
+    
+    public HugeInteger subtract(HugeInteger h){
+        
+        if (hugeintarray[0] != h.getHugeInt()[0]) // Checks to see if the signs are not the same
+        {
+            h.getHugeInt()[0] = hugeintarray[0]; // Makes the signs the same
+            return this.add(h); // Adds the 2 HugeIntegers
+        }
+        else
+        {
+            int[] big; // Stores the larger number
+            int[] small; // Stores the smaller number
+            String diff = ""; // Final output 
+            int i; // Used in loops
+            int x; // Used to see which is the bigger number
+            int temp; // Holds each subtracted number
+            x = this.compareTo(h); // Finds the bigger number
+            int r=1;
+            // Labels the bigger and smaller array appropriately
+            if (x == 1)
+            {
+                big = hugeintarray;
+                small = h.getHugeInt();
+            }
+            else if (x == -1)
+            {
+                big = h.getHugeInt();
+                small = hugeintarray;
+            }
+            else // Both the numbers are the same
+            {
+                HugeInteger zero = new HugeInteger("0");
+                return zero;
+            }
+            if (hugeintarray[0] == 45)
+            {
+                while(r != 0)
+                {
+                    if(size > h.getSize())
+                    {
+                        big = hugeintarray;
+                        small = h.getHugeInt();
+                        r = 0;
+                    }
+                    else if (h.getSize() > size)
+                    {
+                        big = h.getHugeInt();
+                        small = hugeintarray;
+                        r = 0;
+                    }
+                    else
+                    {
+                        if(hugeintarray[r] > h.getHugeInt()[r])
+                        {
+                            big = hugeintarray;
+                            small = h.getHugeInt();
+                            r = 0;
+                        }
+                        else if (hugeintarray[1+r] < h.getHugeInt()[1+r])
+                        {
+                            big = h.getHugeInt();
+                            small = hugeintarray;
+                            r = 0;
+                        }
+                        else
+                        {
+                            r++;
+                        }
+                    }
+                }
+            }
+            for (i = 1; i < small.length; i++)
+            {
+                temp = big[big.length-i] - small[small.length-i];
+                if (temp < 0)
+                {
+                    big[big.length-i-1] -= 1;
+                    temp = big[big.length-i]+10 - small[small.length-i];
+                }
+                diff = temp + diff;
+            }
+            while (i < big.length)
+            {
+                temp = (big[big.length-i]);
+                diff = temp + diff;
+                i++;
+            }
+            HugeInteger sub = new HugeInteger(diff); // Makes sum into type HugeInteger
+            if ((big[0] == 43)&&(small[0] == 43))
+            {
+                if (big == hugeintarray)
+                {
+                    sub.getHugeInt()[0] = 43;
+                }
+                else
+                {
+                    sub.getHugeInt()[0] = 45;
+                }
+            }
+            else
+            {
+                if(big == hugeintarray)
+                {
+                    sub.getHugeInt()[0] = 45;
+                }
+                else
+                {
+                    sub.getHugeInt()[0] = 43;
+                }
+            }
+            return sub;
+        }
+    }
+    
+    public HugeInteger multiply(HugeInteger h){
+        
+        HugeInteger product = new HugeInteger("0");
+        HugeInteger array;
+        int[] bigger;
+        int[] smaller;
+        int holdnum;
+        int temphold = 0;
+        String tempstrnum = "";
+        int comp = this.compareTo(h);
+        if(comp == 1)
+        {
+            bigger = hugeintarray;
+            smaller = h.getHugeInt();
+        }
+        else
+        {
+            bigger = h.getHugeInt();
+            smaller = hugeintarray;
+        }
+        for (int i = 0; i < smaller.length-1; i++)
+        {
+            for (int j = 0; j < bigger.length-1; j++)
+            {
+                holdnum = smaller[smaller.length-1-i] * bigger[bigger.length-j-1];
+                tempstrnum = ((holdnum%10)+temphold) + tempstrnum;
+                temphold = holdnum/10;
+            }
+            if(temphold > 0)
+            {
+                tempstrnum = (temphold) + tempstrnum;
+            }
+            array = new HugeInteger(tempstrnum);
+            product = product.add(array);
+            tempstrnum = "0";
+            for (int y = 0; y < i; y++)
+            {
+                tempstrnum = tempstrnum + "0";
+            }
+            temphold = 0;
+        }
+        if (bigger[0] == smaller[0])
+        {
+            product.getHugeInt()[0] = 43;
+        }
+        else
+        {
+            product.getHugeInt()[0] = 45;
+        }
+        return product;
+    }
+    
+    public int compareTo(HugeInteger h){
+        
+        if (h.getSize() > size)
+        {
+            return -1;
+        }
+        else if (size > h.getSize())
+        {
+            return 1;
+        }
+        else
+        {
+            for (int x = 0; x < size; x++)
+            {
+                if (hugeintarray[x] != h.getHugeInt()[x])
+                {
+                    if (hugeintarray[x] > h.getHugeInt()[x])
+                    {
+                        if(hugeintarray[0] == 45 && h.getHugeInt()[0] == 45)
+                        {
+                            return -1;
+                        }
+                        else
+                        {
+                            return 1;
+                        }
+                    }
+                    else
+                    {
+                        return -1;
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+    
+    public String toString() { // Prints out each word in array on a new line
+        
+        String str = ""; // Creates an empty string
+        if(size == 0) // Checks to see if array is empty
+        {
+            str = "The list is empty";
+        }
+        else // Otherwise
+        {
+            str = "" + (char)hugeintarray[0]; // Sets str to the first element in the array
+        }
+        for (int i = 1; i < size; i++)
+        {
+            str = str + "" + hugeintarray[i]; // Adds a newline then next element
+        }
+        return str;
+    }
+}

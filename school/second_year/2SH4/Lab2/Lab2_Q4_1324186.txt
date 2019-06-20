@@ -1,0 +1,83 @@
+/* 
+ * File:   main.c
+ * Author: mirzahw
+ *
+ * Created on October 2, 2014, 2:36 PM
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "stringlib.h"
+
+/*
+ * 
+ */
+void stringCopy(const char source[], char destination[], int n) { /* Stores the sting in an array*/
+    
+    int i; /* Used for for loop*/
+    for (i = 0; i < n; i++)/* Takes one value from string and stores is accordingly to the array*/
+    {
+        destination[i] = source[i];
+        //printf("'%c' " , destination[i]);
+    }
+    destination[n-1] = '\0';
+    printf("\n");
+}
+
+int charFind(const char string[], char ch) { /* Finds the character in the string*/
+    
+    int count = 0; /* Counter*/
+    while (string[count] != ch) /* Checks to see if the string value is the same as the specified character*/
+    {
+        count++;
+    }
+    if (count == 0) /* Checks to see if the character appeared at all*/
+    {
+        printf("The letter doesn't appear at all: -1 ");
+        return -1;
+    }
+    else
+    {
+        printf("The letter appears as index %d " , count);
+        return count;
+    }
+    
+}
+    
+
+void letterFreq(const char string[], int freq[]){ /* Checks to see how many times each letter appears*/
+    //printf("%c",string[0]);
+    //return ;
+    int i,d,k, stringL;
+    for(stringL = 1; string[stringL] != '\0'; stringL++); /* Determines the length of the sentence*/
+    for(i = 0; i <= 25; i++) /* Checks for each letter*/
+    { 
+        char x, y; /* Used for the letters*/
+        k=0; /* Used to see if it appears*/
+        y=97+i; /* For the letters*/
+        x=65+i; /* For the letters*/
+        for(d = 0; d <= stringL; d++) /* Goes through the sentence for each letter*/
+        {
+            printf("%c",string[d]);
+            if((string[d]== x) || (string[d]== y)) /* Checks to see if the letter is the same*/
+            {
+                k++;/* Adds one to the counter*/
+            } 
+        }
+        freq[i] = k; /* Stores the value in an array*/
+        printf("The count of '%c ' and '%c ' is... %d \n" , x, y, k);     
+    }
+}
+
+int main(int argc, char** argv) {
+
+    const char x[] = ("OellO how are you doing?");
+    char y = ('o');
+    char z[8];
+    int b[26];
+    charFind(x,y);
+    stringCopy(x,z,8);
+    printf("%s\n",z);
+    letterFreq(x,b);
+    return (EXIT_SUCCESS);
+}
