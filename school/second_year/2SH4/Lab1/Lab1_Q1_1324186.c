@@ -1,4 +1,3 @@
-Question 1
 /* 
  * File:   main.c
  * Author: mirzahw
