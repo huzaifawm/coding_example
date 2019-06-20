@@ -1,8 +1,0 @@
-% Question 1
-A = [1 2 3; 3 3 4; 2 3 3];
-sol = [1;1;2];
-% Since Ax = B, we need to solve for x
-% x = (A^-1)*B
-b = inv(A)*sol;
-% To verify this answer
-ver = A*b;
